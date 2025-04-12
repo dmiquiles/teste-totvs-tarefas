@@ -55,4 +55,11 @@ export class TaskEffects {
       )
     )
   );
+
+  refreshTasksAfterUpdate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTaskSuccess),
+      map(() => loadTasks())
+    )
+  );
 }
