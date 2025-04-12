@@ -1,1 +1,6 @@
-<p>task-page works!</p>
+<app-container>
+    <app-task-header></app-task-header>
+    <app-task-search></app-task-search>
+    <app-task-filter></app-task-filter>
+    <app-task-list [tasks]="tasks$ | async" (taskCompleted)="toggleComplete($event)"></app-task-list>
+</app-container>
