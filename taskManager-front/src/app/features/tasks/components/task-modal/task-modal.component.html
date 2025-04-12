@@ -1,0 +1,13 @@
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Nova Tarefa</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <app-task-form (closeModal)="close()"></app-task-form>
+
+  </div>
+</div>
