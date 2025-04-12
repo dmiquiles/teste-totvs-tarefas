@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80" # Mapeia a porta 80 do container para a porta 4200 no host
+    container_name: angular-task-manager
