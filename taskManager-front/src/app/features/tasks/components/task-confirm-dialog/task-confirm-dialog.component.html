@@ -1,0 +1,20 @@
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Confirmação</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <p>Tem certeza de que deseja deletar esta tarefa?</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="close()">Cancelar</button>
+      <button class="confirm-btn" (click)="confirmDelete()">Deletar</button>
+    </div>
+
+  </div>
+</div>
