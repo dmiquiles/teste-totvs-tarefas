@@ -1,1 +1,103 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// .v-middle {
+//     vertical-align: middle;
+// }
+
+// :host {
+//     display: block;
+//     background-color: #ffffff;
+//     color: #111827;
+//     transition: background-color 0.3s ease, color 0.3s ease;
+
+//     &.dark {
+//         background-color: #1f2937;
+//         color: #f9fafb;
+
+//         .search-bar {
+//             background-color: #374151;
+//             border-color: #4b5563;
+//         }
+
+//         .filters button {
+//             color: #d1d5db;
+
+//             &.active {
+//                 background-color: #4b5563;
+//             }
+//         }
+
+//         .task-list .task-card {
+//             background-color: #374151;
+//             border-color: #4b5563;
+
+//             .task-info h3.completed {
+//                 color: #9ca3af;
+//             }
+
+//             small {
+//                 color: #9ca3af;
+//             }
+//         }
+//     }
+// }
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+}
+
+.dark-mode {
+    --background-color: #000000;
+    --text-color: #ffffff;
+    --background-color-item: #374151;
+    --border-color: #4b5563;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.dark-mode .search-bar {
+    background-color: var(--background-color-item);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .search-bar .icon {
+    color: var(--text-color);
+}
+
+body.dark-mode .search-bar input {
+    color: var(--text-color);
+}
+
+body.dark-mode .filters button {
+    background-color: var(--background-color-item)!important;
+    color: var(--text-color)!important;
+}
+
+body.dark-mode .filters button.active {
+    background-color: var(--text-color)!important;
+    color: var(--background-color)!important;
+}
+
+body.dark-mode .task-card {
+    background-color: #374151!important;
+    border-color: #4b5563!important;
+}
+
+.error {
+    font-size: 12px;
+    color: red;
+}
