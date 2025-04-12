@@ -1,0 +1,11 @@
+<header class="header">
+    <h1 class="title">Tasks</h1>
+    <div class="header-actions">
+        <button class="new-task-btn" (click)="openModal()">Nova Tarefa</button>
+        <span class="theme-toggle" (click)="toggleDarkMode()">
+            <span class="material-icons">{{ (darkMode$ | async) ? 'dark_mode' : 'light_mode' }}</span>
+        </span>
+    </div>
+</header>
+
+<app-task-modal *ngIf="showModal" (fechar)="closeModal()"></app-task-modal>
