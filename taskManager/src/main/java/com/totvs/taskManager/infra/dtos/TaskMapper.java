@@ -10,5 +10,5 @@ public interface TaskMapper {
 
     TaskResponse toResponse(Task task);
     Task taskRequestToEntity(TaskRequest request);
-    Task editarTaskRequestToEntity(EditarTaskRequest request);
+    Task updateTaskRequestToEntity(UpdateTaskRequest request);
 }

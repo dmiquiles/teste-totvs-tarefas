@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface TaskUseCase {
-    Task criarTask(Task task);
-    Page<Task> buscarTodasTasks(Pageable pageable);
-    void deletarTask(Long id);
-    Task buscarPorId(Long id);
-    Task editarTask(Long id, Task task);
+    Task create(Task task);
+    Page<Task> findAll(Pageable pageable);
+    void delete(Long id);
+    Task findById(Long id);
+    Task update(Long id, Task task);
 }
