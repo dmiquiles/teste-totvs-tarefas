@@ -13,3 +13,13 @@ export const selectModalTask = createSelector(
     selectModalState,
     (state) => state.task
 );
+
+export const selectIsDeleteModalOpen = createSelector(
+    selectModalState,
+    (state) => state.isDeleteModalOpen
+);
+
+export const selectTaskIdForDeletion = createSelector(
+    selectModalState,
+    (state) => state.taskId
+);

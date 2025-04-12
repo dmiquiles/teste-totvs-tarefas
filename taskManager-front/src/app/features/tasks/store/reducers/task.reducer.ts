@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialTaskState } from '../models/task.state';
-import { createTaskSuccess, loadTasksSuccess, updateTaskSuccess } from '../actions/task.action';
+import { createTaskSuccess, deleteTaskSuccess, loadTasksSuccess, updateTaskSuccess } from '../actions/task.action';
 
 export const taskReducer = createReducer(
   initialTaskState,
@@ -14,6 +14,10 @@ export const taskReducer = createReducer(
   })),
   on(updateTaskSuccess, (state, { task }) => ({
     ...state,
-    tasks: state.tasks.map((t) => (t.id === task.id ? task : t)), // Atualiza a tarefa no estado
+    tasks: state.tasks.map((t) => (t.id === task.id ? task : t)),
+  })),
+  on(deleteTaskSuccess, (state, { taskId }) => ({
+    ...state,
+    tasks: state.tasks.filter((task) => task.id !== Number(taskId)),
   }))
 );

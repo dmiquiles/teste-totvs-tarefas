@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialModalState } from '../models/modal.state';
-import { closeModal, openModal } from '../actions/modal.action';
+import { closeDeleteModal, closeModal, openDeleteModal, openModal } from '../actions/modal.action';
 
 export const modalReducer = createReducer(
   initialModalState,
@@ -13,5 +13,15 @@ export const modalReducer = createReducer(
     ...state,
     isOpen: false,
     task: null,
+  })),
+  on(openDeleteModal, (state, { taskId }) => ({
+    ...state,
+    isDeleteModalOpen: true,
+    taskId,
+  })),
+  on(closeDeleteModal, (state) => ({
+    ...state,
+    isDeleteModalOpen: false,
+    taskId: null,
   }))
 );
