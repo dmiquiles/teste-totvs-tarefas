@@ -61,6 +61,7 @@ public class TaskService implements TaskUseCase {
 
         existingTask.setTitle(updatedTask.getTitle());
         existingTask.setDate(updatedTask.getDate());
+        existingTask.setPriority(updatedTask.getPriority());
         existingTask.setCompleted(updatedTask.isCompleted());
         existingTask.setUpdateAt(LocalDateTime.now());
 
@@ -68,7 +69,6 @@ public class TaskService implements TaskUseCase {
 
         return repository.save(existingTask);
     }
-
 
     private void validateTask(Task task) {
         if (task.getTitle() == null || task.getTitle().trim().isEmpty()) {

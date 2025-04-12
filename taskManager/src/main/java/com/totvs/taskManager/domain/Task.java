@@ -17,8 +17,6 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-//    @Size(max = 500)
-//    private String descricao;
     private boolean completed = false;
 
     @Enumerated(EnumType.STRING)
@@ -33,11 +31,6 @@ public class Task {
             this.completed = true;
         }
     }
-
-
-
-
-
 
 }
 

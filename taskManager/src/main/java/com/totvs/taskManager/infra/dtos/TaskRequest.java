@@ -22,10 +22,6 @@ public class TaskRequest {
     @Schema(description = "Título da task", example = "Implementar Swagger", required = true)
     private String title;
 
-//    @Size(max = 500)
-//    @Schema(description = "Descrição detalhada", example = "Documentar a API com Swagger")
-//    private String descricao;
-
     @NotNull
     @Schema(description = "Data de conclusão", example = "2023-10-01")
     @JsonFormat(pattern = "yyyy-MM-dd")
