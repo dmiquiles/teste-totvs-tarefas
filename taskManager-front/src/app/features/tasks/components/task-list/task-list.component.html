@@ -1,1 +1,15 @@
-<p>task-list works!</p>
+<div class="task-list">
+  <ng-container *ngIf="filteredTasks$ | async">
+    <div class="task-card" *ngFor="let task of filteredTasks$ | async">
+      <input type="checkbox" (click)="toggleComplete(task)" />
+      <div class="task-info">
+        <h3 [class.completed]="task.completed">{{ task.title }}</h3>
+        <small>{{ task.date | date: 'dd/MM/yyyy' }}</small>
+      </div>
+      <span class="tag" [ngClass]="normalizePriority(task)">{{ task.priority }}</span>
+      <span class="material-icons">edit</span>
+      <span class="material-icons">delete</span>
+    </div>
+  </ng-container>
+</div>
+
