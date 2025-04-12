@@ -3,7 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { loadTasks, loadTasksSuccess, loadTasksFailure, createTask, createTaskFailure, createTaskSuccess } from '../actions/task.action';
+import { loadTasks, loadTasksSuccess, loadTasksFailure, createTask, createTaskFailure, createTaskSuccess, updateTask, updateTaskSuccess, updateTaskFailure } from '../actions/task.action';
 
 @Injectable()
 export class TaskEffects {
@@ -39,6 +39,18 @@ export class TaskEffects {
         this.taskService.create(task).pipe(
           map((createdTask) => createTaskSuccess({ task: createdTask })),
           catchError((error) => of(createTaskFailure({ error })))
+        )
+      )
+    )
+  );
+
+  updateTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTask),
+      mergeMap(({ task }) =>
+        this.taskService.update(task).pipe(
+          map((updatedTask) => updateTaskSuccess({ task: updatedTask })),
+          catchError((error) => of(updateTaskFailure({ error })))
         )
       )
     )

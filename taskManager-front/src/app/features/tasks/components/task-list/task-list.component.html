@@ -7,7 +7,7 @@
         <small>{{ task.date | date: 'dd/MM/yyyy' }}</small>
       </div>
       <span class="tag" [ngClass]="normalizePriority(task)">{{ task.priority }}</span>
-      <span class="material-icons">edit</span>
+      <span class="material-icons" (click)="editTask(task)">edit</span>
       <span class="material-icons">delete</span>
     </div>
   </ng-container>

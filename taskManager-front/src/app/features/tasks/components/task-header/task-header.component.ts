@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { TaskFormComponent } from "../task-form/task-form.component";
 import { MatDialog } from '@angular/material/dialog';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
+import { closeModal, openModal } from '../../store/actions/modal.action';
+import { selectModalOpen } from '../../store/selectors/modal.selectors';
 
 @Component({
   selector: 'app-task-header',
@@ -30,16 +32,20 @@ export class TaskHeaderComponent {
 
   showModal = false;
 
+  isModalOpen$: Observable<boolean>;
+
+  
   constructor(private store: Store, private dialog: MatDialog) {
+    this.isModalOpen$ = this.store.select(selectModalOpen);
     this.darkMode$ = this.store.select(selectDarkMode);
   }
 
   openModal() {
-    this.showModal = true;
+    this.store.dispatch(openModal({task: null}));
   }
 
   closeModal() {
-    this.showModal = false;
+    this.store.dispatch(closeModal());
   }
 
   toggleDarkMode() {

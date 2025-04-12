@@ -39,17 +39,17 @@
             width: 40px;
             text-align: center;
 
-            &.baixa {
-                background-color: #2cb018;
+            &.low {
+                background-color: #bdf5b5;
                 color: #1e293b;
             }
 
-            &.media {
+            &.medium {
                 background-color: #fde905;
                 color: #92400e;
             }
 
-            &.alta {
+            &.high {
                 background-color: #fee2e2;
                 color: #991b1b;
             }

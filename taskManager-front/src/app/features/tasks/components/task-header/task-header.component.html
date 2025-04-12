@@ -8,4 +8,5 @@
     </div>
 </header>
 
-<app-task-modal *ngIf="showModal" (fechar)="closeModal()"></app-task-modal>
+<!-- <app-task-modal *ngIf="showModal" (fechar)="closeModal()"></app-task-modal> -->
+<app-task-modal *ngIf="isModalOpen$ | async"></app-task-modal>

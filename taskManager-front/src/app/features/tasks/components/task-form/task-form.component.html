@@ -1,21 +1,21 @@
-<form [formGroup]="taskForm" (ngSubmit)="salvar()">
+<form [formGroup]="taskForm" (ngSubmit)="save()">
   <label for="titulo">Título</label>
-  <input id="titulo" formControlName="title" name="titulo" required />
+  <input id="titulo" formControlName="title" name="titulo" />
   <div class="error" *ngIf="taskForm.controls.title.invalid && taskForm.controls.title.touched">
-    O título é obrigatório e deve ter no máximo 100 caracteres.
+    O título é obrigatório.
   </div>
 
   <label for="vencimento">Data de vencimento</label>
-  <input type="date" id="vencimento" formControlName="date" name="dataVencimento" required />
+  <input type="date" id="vencimento" formControlName="date" name="dataVencimento" />
   <div class="error" *ngIf="taskForm.controls.date.invalid && taskForm.controls.date.touched">
     A data é obrigatória.
   </div>
 
   <label for="prioridade">Prioridade</label>
   <select id="prioridade" formControlName="priority" name="prioridade">
-    <option value="LOW">Baixa</option>
-    <option value="MEDIUM">Média</option>
-    <option value="HIGH">Alta</option>
+    <option value="LOW">Low</option>
+    <option value="MEDIUM">Medium</option>
+    <option value="HIGH">High</option>
   </select>
   <div class="error" *ngIf="taskForm.controls.priority.invalid && taskForm.controls.priority.touched">
     A prioridade é obrigatória.

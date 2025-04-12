@@ -83,18 +83,40 @@ body.dark-mode .search-bar input {
 }
 
 body.dark-mode .filters button {
-    background-color: var(--background-color-item)!important;
-    color: var(--text-color)!important;
+    background-color: var(--background-color-item) !important;
+    color: var(--text-color) !important;
 }
 
 body.dark-mode .filters button.active {
-    background-color: var(--text-color)!important;
-    color: var(--background-color)!important;
+    background-color: var(--text-color) !important;
+    color: var(--background-color) !important;
 }
 
 body.dark-mode .task-card {
-    background-color: #374151!important;
-    border-color: #4b5563!important;
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--background-color-item) !important;
+    color: var(--text-color) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode .close-btn {
+    color: var(--text-color) !important;
+}
+
+body.dark-mode label {
+    color: var(--text-color) !important;
+  }
+
+body.dark-mode input,
+textarea,
+select {
+    background-color: var(--background-color-item) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
 }
 
 .error {

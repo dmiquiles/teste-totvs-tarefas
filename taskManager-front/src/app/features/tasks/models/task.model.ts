@@ -4,6 +4,6 @@ export interface Task {
   date: string;
   updatedAt?: string;
   createdAt?: string;
-  priority: 'Baixa' | 'Média' | 'Alta';
+  priority: 'LOW' | 'MEDIUM' | 'HIGH';
   completed: boolean;
 }

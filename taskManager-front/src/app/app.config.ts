@@ -9,6 +9,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { taskReducer } from './features/tasks/store/reducers/task.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { TaskEffects } from './features/tasks/store/effects/task.effects';
+import { modalReducer } from './features/tasks/store/reducers/modal.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       theme: themeReducer,
       search: searchReducer,
-      tasks: taskReducer
+      tasks: taskReducer,
+      modal: modalReducer
     }),
     provideEffects([TaskEffects])
   ]

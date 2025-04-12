@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskFormComponent } from "../task-form/task-form.component";
-import { Task } from '../../models/task.model';
+import { Store } from '@ngrx/store';
+import { closeModal } from '../../store/actions/modal.action';
 
 @Component({
   selector: 'app-task-modal',
@@ -13,7 +14,10 @@ import { Task } from '../../models/task.model';
 })
 export class TaskModalComponent {
 
-  @Output() fechar = new EventEmitter<void>();
-  // @Output() criar = new EventEmitter<Task>();
+  constructor(private store: Store) {}
+
+  close() {
+    this.store.dispatch(closeModal());
+  }
 
 }

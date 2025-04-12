@@ -6,6 +6,7 @@ import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { openModal } from '../../store/actions/modal.action';
 
 @Component({
   selector: 'app-task-list',
@@ -41,6 +42,10 @@ export class TaskListComponent {
   toggleComplete(task: Task) {
     task.completed = !task.completed;
     this.taskCompleted.emit(task);
+  }
+
+  editTask(task: Task) {
+    this.store.dispatch(openModal({ task })); // Dispara a ação para abrir o modal com a tarefa
   }
 
   normalizePriority(task: Task): string {
