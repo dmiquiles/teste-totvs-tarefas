@@ -62,7 +62,7 @@ export class TaskFormComponent {
   save() {
     if (this.task && this.taskForm.valid) {
       const updatedTask = { ...this.task, ...this.taskForm.value };
-      this.store.dispatch(updateTask({ task: updatedTask })); // Dispara a ação para atualizar a tarefa
+      this.store.dispatch(updateTask({ task: updatedTask }));
     } else if (this.taskForm.valid) {
       const task: Task = this.taskForm.getRawValue();
       this.store.dispatch(createTask({ task }));
