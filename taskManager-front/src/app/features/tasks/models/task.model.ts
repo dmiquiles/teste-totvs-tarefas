@@ -1,9 +1,9 @@
 export interface Task {
-    id?: number;
-    titulo: string;
-    descricao: string;
-    finalizado: boolean;
-    dataCriacao?: Date;
-    dataAtualizacao?: Date;
-  }
-  
+  id?: number;
+  title: string;
+  date: string;
+  updatedAt?: string;
+  createdAt?: string;
+  priority: 'Baixa' | 'Média' | 'Alta';
+  completed: boolean;
+}
