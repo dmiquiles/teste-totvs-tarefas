@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
+import { PageableTaskResponse } from '../models/pageable-task-response';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.API_URL);
+  getAll(): Observable<PageableTaskResponse> {
+    return this.http.get<PageableTaskResponse>(this.API_URL);
   }
 
   getById(id: number): Observable<Task> {
