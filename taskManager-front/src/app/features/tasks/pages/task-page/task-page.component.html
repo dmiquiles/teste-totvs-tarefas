@@ -3,4 +3,6 @@
     <app-task-search></app-task-search>
     <app-task-filter></app-task-filter>
     <app-task-list [tasks]="tasks$ | async" (taskCompleted)="toggleComplete($event)"></app-task-list>
+    <app-task-confirm-dialog *ngIf="(isDeleteModalOpen$ | async)"></app-task-confirm-dialog>
+    <app-task-modal *ngIf="isModalOpen$ | async"></app-task-modal>
 </app-container>

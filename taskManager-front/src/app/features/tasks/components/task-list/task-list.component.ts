@@ -6,7 +6,8 @@ import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { openModal } from '../../store/actions/modal.action';
+import { openDeleteModal, openModal } from '../../store/actions/modal.action';
+import { deleteTask } from '../../store/actions/task.action';
 
 @Component({
   selector: 'app-task-list',
@@ -45,11 +46,15 @@ export class TaskListComponent {
   }
 
   editTask(task: Task) {
-    this.store.dispatch(openModal({ task })); // Dispara a ação para abrir o modal com a tarefa
+    this.store.dispatch(openModal({ task }));
   }
 
   normalizePriority(task: Task): string {
     return task.priority.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  }
+
+  deleteTask(taskId: string) {
+    this.store.dispatch(openDeleteModal({ taskId }));
   }
 
 }

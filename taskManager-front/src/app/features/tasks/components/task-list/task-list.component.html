@@ -8,7 +8,7 @@
       </div>
       <span class="tag" [ngClass]="normalizePriority(task)">{{ task.priority }}</span>
       <span class="material-icons" (click)="editTask(task)">edit</span>
-      <span class="material-icons">delete</span>
+      <span class="material-icons" (click)="deleteTask(task.id)">delete</span>
     </div>
   </ng-container>
 </div>
