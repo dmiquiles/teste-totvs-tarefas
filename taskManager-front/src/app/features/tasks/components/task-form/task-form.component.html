@@ -1,1 +1,25 @@
-<p>task-form works!</p>
+<form [formGroup]="taskForm" (ngSubmit)="salvar()">
+  <label for="titulo">Título</label>
+  <input id="titulo" formControlName="title" name="titulo" required />
+  <div class="error" *ngIf="taskForm.controls.title.invalid && taskForm.controls.title.touched">
+    O título é obrigatório e deve ter no máximo 100 caracteres.
+  </div>
+
+  <label for="vencimento">Data de vencimento</label>
+  <input type="date" id="vencimento" formControlName="date" name="dataVencimento" required />
+  <div class="error" *ngIf="taskForm.controls.date.invalid && taskForm.controls.date.touched">
+    A data é obrigatória.
+  </div>
+
+  <label for="prioridade">Prioridade</label>
+  <select id="prioridade" formControlName="priority" name="prioridade">
+    <option value="LOW">Baixa</option>
+    <option value="MEDIUM">Média</option>
+    <option value="HIGH">Alta</option>
+  </select>
+  <div class="error" *ngIf="taskForm.controls.priority.invalid && taskForm.controls.priority.touched">
+    A prioridade é obrigatória.
+  </div>
+
+  <button class="salvar-btn" type="submit" [disabled]="taskForm.invalid">Salvar</button>
+</form>
