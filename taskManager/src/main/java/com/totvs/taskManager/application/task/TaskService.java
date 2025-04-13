@@ -1,4 +1,4 @@
-package com.totvs.taskManager.application;
+package com.totvs.taskManager.application.task;
 
 import com.totvs.taskManager.domain.Task;
 import com.totvs.taskManager.exceptions.TaskNotFoundException;
