@@ -1,48 +1,53 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { openDeleteModal, openModal } from '../../store/actions/modal.action';
-import { deleteTask } from '../../store/actions/task.action';
+import { FormsModule } from '@angular/forms';
+import { toggleTaskComplete } from '../../store/actions/task.action';
+import { selectCurrentFilter } from '../../store/selectors/filter.selectors';
+import { selectSearchTerm } from '../../store/selectors/search.selectors';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent {
 
   @Input() tasks!: Task[] | null;
-  @Output() taskCompleted = new EventEmitter<Task>();
   filteredTasks$: Observable<any[]> = new Observable();
-  private searchTerm$ = new BehaviorSubject<string>('');
 
-  constructor(private store: Store<{ search: { term: string } }>) {
-    this.store.select('search').subscribe((state) => {
-      this.searchTerm$.next(state.term.toLowerCase());
-    });
-  }
+  constructor(private store: Store) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks'] && this.tasks) {
-      this.filteredTasks$ = this.searchTerm$.pipe(
-        map((term) =>
-          (this.tasks || []).filter((task) =>
-            task.title.toLowerCase().includes(term)
-          )
-        )
+      this.filteredTasks$ = combineLatest([
+        this.store.select(selectCurrentFilter),
+        this.store.select(selectSearchTerm)
+      ]).pipe(
+        map(([filter, searchTerm]) => {
+          if (!this.tasks) return [];
+
+          let filteredTasks = this.tasks;
+          if (filter === 'Ativas') {
+            filteredTasks = filteredTasks.filter((task) => !task.completed);
+          } else if (filter === 'Concluídas') {
+            filteredTasks = filteredTasks.filter((task) => task.completed);
+          }
+
+          return filteredTasks.filter((task) =>
+            task.title.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        })
       );
     }
   }
 
   toggleComplete(task: Task) {
-    task.completed = !task.completed;
-    this.taskCompleted.emit(task);
+    this.store.dispatch(toggleTaskComplete({ task }));
   }
 
   editTask(task: Task) {

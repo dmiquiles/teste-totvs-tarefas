@@ -1,5 +1,5 @@
 <div class="filters">
-    <button [class.active]="filter === 'Todas'" (click)="setFilter('Todas')">Todas</button>
-    <button [class.active]="filter === 'Ativas'" (click)="setFilter('Ativas')">Ativas</button>
-    <button [class.active]="filter === 'Concluídas'" (click)="setFilter('Concluídas')">Concluídas</button>
+    <button [class.active]="(currentFilter$ | async) === 'Todas'" (click)="setFilter('Todas')">Todas</button>
+    <button [class.active]="(currentFilter$ | async) === 'Ativas'" (click)="setFilter('Ativas')">Ativas</button>
+    <button [class.active]="(currentFilter$ | async) === 'Concluídas'" (click)="setFilter('Concluídas')">Concluídas</button>
 </div>

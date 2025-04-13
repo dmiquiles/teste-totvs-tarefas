@@ -53,3 +53,17 @@ export const deleteTaskFailure = createAction(
   '[Task] Delete Task Failure',
   props<{ error: any }>()
 );
+
+// This action is used to complete a task
+export const toggleTaskComplete = createAction(
+  '[Task] Toggle Task Complete',
+  props<{ task: Task }>()
+);
+export const toggleTaskCompleteSuccess = createAction(
+  '[Task] Toggle Task Complete Success',
+  props<{ task: Task }>()
+);
+export const toggleTaskCompleteFailure = createAction(
+  '[Task] Toggle Task Complete Failure',
+  props<{ error: any }>()
+);
