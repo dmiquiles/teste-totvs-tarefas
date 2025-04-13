@@ -2,7 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { openDeleteModal, openModal } from '../../store/actions/modal.action';
 import { FormsModule } from '@angular/forms';
 import { toggleTaskComplete } from '../../store/actions/task.action';

@@ -32,8 +32,20 @@ describe('TaskFilterComponent', () => {
   });
 
   it('should dispatch setFilter action when setFilter is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.setFilter('Ativas');
     expect(store.dispatch).toHaveBeenCalledWith(setFilter({ filter: 'Ativas' }));
+  });
+
+  it('should dispatch setFilter with "Todas" when setFilter is called with "Todas"', () => {
+    jest.spyOn(store, 'dispatch');
+    component.setFilter('Todas');
+    expect(store.dispatch).toHaveBeenCalledWith(setFilter({ filter: 'Todas' }));
+  });
+  
+  it('should dispatch setFilter with "Concluídas" when setFilter is called with "Concluídas"', () => {
+    jest.spyOn(store, 'dispatch');
+    component.setFilter('Concluídas');
+    expect(store.dispatch).toHaveBeenCalledWith(setFilter({ filter: 'Concluídas' }));
   });
 });

@@ -24,7 +24,7 @@ describe('TaskModalComponent', () => {
   });
 
   it('should dispatch closeModal when close is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.close();
     expect(store.dispatch).toHaveBeenCalledWith(closeModal());
   });

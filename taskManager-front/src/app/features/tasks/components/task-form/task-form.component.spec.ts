@@ -59,7 +59,7 @@ describe('TaskFormComponent', () => {
   });
 
   it('should dispatch updateTask and closeModal when saving an existing task', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     const task: Task = {
       id: 1,
       title: 'Test Task',
@@ -92,7 +92,7 @@ describe('TaskFormComponent', () => {
   });
 
   it('should dispatch createTask and closeModal when saving a new task', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.task = null;
     component.taskForm.setValue({
       title: 'New Task',
@@ -117,9 +117,9 @@ describe('TaskFormComponent', () => {
   });
 
   it('should reset the form and dispatch closeModal when close is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.close();
-    expect(component.taskForm.pristine).toBeTrue();
+    expect(component.taskForm.pristine).toBeTruthy();
     expect(store.dispatch).toHaveBeenCalledWith(closeModal());
   });
 });

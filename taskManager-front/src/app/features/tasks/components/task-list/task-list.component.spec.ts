@@ -31,7 +31,7 @@ describe('TaskListComponent', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    spyOn(store, 'select').and.callFake((selector) => {
+    jest.spyOn(store, 'select').mockImplementation((selector: any) => {
       if (selector === selectCurrentFilter) {
         return of('Todas');
       }
@@ -65,117 +65,8 @@ describe('TaskListComponent', () => {
     });
   });
 
-  // it('should filter tasks based on "Ativas" filter', () => {
-  //   spyOn(store, 'select').and.callFake((selector) => {
-  //     if (selector === selectCurrentFilter) {
-  //       return of('Ativas');
-  //     }
-  //     if (selector === selectSearchTerm) {
-  //       return of('');
-  //     }
-  //     return of(null);
-  //   });
-
-  //   component.tasks = mockTasks;
-
-  //   component.ngOnChanges({
-  //     tasks: {
-  //       currentValue: component.tasks,
-  //       previousValue: null,
-  //       firstChange: true,
-  //       isFirstChange: () => true,
-  //     },
-  //   });
-
-  //   component.filteredTasks$.subscribe((filteredTasks) => {
-  //     expect(filteredTasks.length).toBe(2);
-  //     expect(filteredTasks.every((task) => !task.completed)).toBeTrue();
-  //   });
-  // });
-
-  // it('should filter tasks based on "Concluídas" filter', () => {
-  //   spyOn(store, 'select').and.callFake((selector) => {
-  //     if (selector === selectCurrentFilter) {
-  //       return of('Concluídas');
-  //     }
-  //     if (selector === selectSearchTerm) {
-  //       return of('');
-  //     }
-  //     return of(null);
-  //   });
-
-  //   component.tasks = mockTasks;
-
-  //   component.ngOnChanges({
-  //     tasks: {
-  //       currentValue: component.tasks,
-  //       previousValue: null,
-  //       firstChange: true,
-  //       isFirstChange: () => true,
-  //     },
-  //   });
-
-  //   component.filteredTasks$.subscribe((filteredTasks) => {
-  //     expect(filteredTasks.length).toBe(1); // Only completed tasks should be included
-  //     expect(filteredTasks.every((task) => task.completed)).toBeTrue();
-  //   });
-  // });
-
-  // it('should filter tasks based on search term', () => {
-  //   spyOn(store, 'select').and.callFake((selector) => {
-  //     if (selector === selectCurrentFilter) {
-  //       return of('Todas'); // Default filter
-  //     }
-  //     if (selector === selectSearchTerm) {
-  //       return of('Task'); // Search term
-  //     }
-  //     return of(null);
-  //   });
-
-  //   component.tasks = mockTasks;
-
-  //   component.ngOnChanges({
-  //     tasks: {
-  //       currentValue: component.tasks,
-  //       previousValue: null,
-  //       firstChange: true,
-  //       isFirstChange: () => true,
-  //     },
-  //   });
-
-  //   component.filteredTasks$.subscribe((filteredTasks) => {
-  //     expect(filteredTasks.length).toBe(2); // Only tasks matching "Task" should be included
-  //     expect(filteredTasks.every((task) => task.title.includes('Task'))).toBeTrue();
-  //   });
-  // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   it('should dispatch toggleTaskComplete when toggleComplete is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     const task = { id: 1, title: 'Task 1', completed: false, priority: 'LOW' } as Task;
 
     component.toggleComplete(task);
@@ -184,7 +75,7 @@ describe('TaskListComponent', () => {
   });
 
   it('should dispatch openModal when editTask is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     const task = { id: 1, title: 'Task 1', completed: false, priority: 'LOW' } as Task;
 
     component.editTask(task);
@@ -193,7 +84,7 @@ describe('TaskListComponent', () => {
   });
 
   it('should dispatch openDeleteModal when deleteTask is called', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     const taskId = '1';
 
     component.deleteTask(taskId);

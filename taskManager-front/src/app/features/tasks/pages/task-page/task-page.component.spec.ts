@@ -1,107 +1,49 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { TaskPageComponent } from './task-page.component';
-// import { provideMockStore, MockStore } from '@ngrx/store/testing';
-// import { loadTasks } from '../../store/actions/task.action';
-// import { selectAllTasks } from '../../store/selectors/task.selectors';
-// import { selectIsDeleteModalOpen, selectModalOpen } from '../../store/selectors/modal.selectors';
-// import { Task } from '../../models/task.model';
-// import { of } from 'rxjs';
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { Task } from "../../models/task.model";
+import { loadTasks } from "../../store/actions/task.action";
+import { selectIsDeleteModalOpen, selectModalOpen } from "../../store/selectors/modal.selectors";
+import { selectAllTasks } from "../../store/selectors/task.selectors";
+import { TaskPageComponent } from "./task-page.component";
 
-// describe('TaskPageComponent', () => {
-//   let component: TaskPageComponent;
-//   let fixture: ComponentFixture<TaskPageComponent>;
-//   let store: MockStore;
+describe('TaskPageComponent', () => {
+  let component: TaskPageComponent;
+  let store: Store;
 
-//   const mockTasks: Task[] = [
-//     { id: 1, title: 'Task 1', completed: false, priority: 'LOW' } as Task,
-//     { id: 2, title: 'Task 2', completed: true, priority: 'HIGH' } as Task,
-//   ];
+  beforeEach(() => {
+    store = {
+      dispatch: jest.fn(),
+      select: jest.fn().mockReturnValue(new Observable())
+    } as unknown as Store;
 
-//   const initialState = {
-//     tasks: mockTasks,
-//     modal: { isDeleteModalOpen: false, isModalOpen: false },
-//   };
+    component = new TaskPageComponent(store);
+  });
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       providers: [provideMockStore({ initialState })],
-//     }).compileComponents();
+  it('should dispatch loadTasks on initialization', () => {
+    component.ngOnInit();
+    expect(store.dispatch).toHaveBeenCalledWith(loadTasks());
+  });
 
-//     fixture = TestBed.createComponent(TaskPageComponent);
-//     component = fixture.componentInstance;
-//     store = TestBed.inject(MockStore);
+  it('should select tasks$ observable on initialization', () => {
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(selectAllTasks);
+  });
 
-//     spyOn(store, 'select').and.callFake((selector) => {
-//       if (selector === selectAllTasks) {
-//         return of(mockTasks);
-//       }
-//       if (selector === selectIsDeleteModalOpen) {
-//         return of(false);
-//       }
-//       if (selector === selectModalOpen) {
-//         return of(false);
-//       }
-//       return of(null);
-//     });
+  it('should select isDeleteModalOpen$ observable on initialization', () => {
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(selectIsDeleteModalOpen);
+  });
 
-//     spyOn(store, 'dispatch');
-//     fixture.detectChanges();
-//   });
+  it('should select isModalOpen$ observable on initialization', () => {
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(selectModalOpen);
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-
-//   it('should dispatch loadTasks on initialization', () => {
-//     component.ngOnInit();
-//     expect(store.dispatch).toHaveBeenCalledWith(loadTasks());
-//   });
-
-//   it('should select tasks from the store', (done) => {
-//     component.tasks$.subscribe((tasks) => {
-//       expect(tasks).toEqual(mockTasks);
-//       done();
-//     });
-//   });
-
-//   it('should select isDeleteModalOpen from the store', (done) => {
-//     component.isDeleteModalOpen$.subscribe((isOpen) => {
-//       expect(isOpen).toBeFalse();
-//       done();
-//     });
-//   });
-
-//   it('should select isModalOpen from the store', (done) => {
-//     component.isModalOpen$.subscribe((isOpen) => {
-//       expect(isOpen).toBeFalse();
-//       done();
-//     });
-//   });
-
-//   // it('should select tasks from the store', (done) => {
-//   //   component.tasks$.subscribe((tasks) => {
-//   //     expect(tasks).toEqual(mockTasks);
-//   //     done();
-//   //   });
-//   // });
-
-//   // it('should select isDeleteModalOpen from the store', (done) => {
-//   //   component.isDeleteModalOpen$.subscribe((isOpen) => {
-//   //     expect(isOpen).toBeFalse();
-//   //     done();
-//   //   });
-//   // });
-
-//   // it('should select isModalOpen from the store', (done) => {
-//   //   component.isModalOpen$.subscribe((isOpen) => {
-//   //     expect(isOpen).toBeFalse();
-//   //     done();
-//   //   });
-//   // });
-
-//   // it('should toggle task completion', () => {
-//   //   const task = { id: 1, title: 'Task 1', completed: false, priority: 'LOW' } as Task;
-//   //   component.toggleComplete(task);
-//   //   expect(task.completed).toBeTrue();
-//   // });
-// });
+  it('should toggle task completion status', () => {
+    const task: Task = { id: 1, title: 'Test Task', completed: false , date: '2023-10-01', priority: 'LOW' };
+    component.toggleComplete(task);
+    expect(task.completed).toBe(true);
+    component.toggleComplete(task);
+    expect(task.completed).toBe(false);
+  });
+});

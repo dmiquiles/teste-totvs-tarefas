@@ -30,14 +30,14 @@ describe('TaskConfirmDialogComponent', () => {
   });
 
   it('should dispatch deleteTask and closeDeleteModal on confirmDelete', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.confirmDelete();
     expect(store.dispatch).toHaveBeenCalledWith(deleteTask({ taskId: '123' }));
     expect(store.dispatch).toHaveBeenCalledWith(closeDeleteModal());
   });
 
   it('should dispatch closeDeleteModal on close', () => {
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
     component.close();
     expect(store.dispatch).toHaveBeenCalledWith(closeDeleteModal());
   });
