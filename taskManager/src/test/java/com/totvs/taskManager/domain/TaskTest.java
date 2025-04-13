@@ -13,7 +13,7 @@ class TaskTest {
 
         Task task = new Task(1L, "Título", false, Priority.LOW, LocalDateTime.now(), LocalDateTime.now(), null);
 
-        task.markAsCompleted();
+        task.toggleComplete();
 
         assertTrue(task.isCompleted());
     }
@@ -23,7 +23,7 @@ class TaskTest {
 
         Task task = new Task(1L, "Título", true, Priority.LOW, LocalDateTime.now(), LocalDateTime.now(), null);
 
-        task.markAsCompleted();
+        task.toggleComplete();
 
         assertTrue(task.isCompleted());
     }
