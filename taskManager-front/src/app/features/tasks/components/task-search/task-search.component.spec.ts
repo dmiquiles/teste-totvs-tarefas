@@ -1,23 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TaskSearchComponent } from './task-search.component';
+import { setSearchTerm } from "../../store/actions/search.action";
+import { TaskSearchComponent } from "./task-search.component";
 
 describe('TaskSearchComponent', () => {
   let component: TaskSearchComponent;
-  let fixture: ComponentFixture<TaskSearchComponent>;
+  let store: any;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TaskSearchComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(TaskSearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    store = {
+      dispatch: jest.fn(),
+    };
+    component = new TaskSearchComponent(store);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should dispatch setSearchTerm with the term when term length is 3 or more', () => {
+    const term = 'test';
+    component.searchTasks(term);
+    expect(store.dispatch).toHaveBeenCalledWith(setSearchTerm({ term }));
+  });
+
+  it('should dispatch setSearchTerm with an empty string when term length is less than 3', () => {
+    const term = 'te';
+    component.searchTasks(term);
+    expect(store.dispatch).toHaveBeenCalledWith(setSearchTerm({ term: '' }));
   });
 });

@@ -10,6 +10,8 @@ import { taskReducer } from './features/tasks/store/reducers/task.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { TaskEffects } from './features/tasks/store/effects/task.effects';
 import { modalReducer } from './features/tasks/store/reducers/modal.reducer';
+import { filterReducer } from './features/tasks/store/reducers/filter.reducer';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +22,8 @@ export const appConfig: ApplicationConfig = {
       theme: themeReducer,
       search: searchReducer,
       tasks: taskReducer,
-      modal: modalReducer
+      modal: modalReducer,
+      filter: filterReducer
     }),
     provideEffects([TaskEffects])
   ]

@@ -12,6 +12,83 @@
         border-radius: 0.75rem;
         padding: 1rem;
 
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .task-header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+
+            @media screen and (max-width: 768px) {
+                width: 100%;
+            }
+
+            button {
+                background-color: #3b82f6;
+                width: 93px;
+                color: white;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+        
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                }
+        
+                &:hover {
+                    background-color: #1d4ed8;
+                }
+        
+                &:active {
+                    background-color: #1e40af;
+                }
+        
+                &.completed {
+                    background-color: #10b981;
+                    color: white;
+        
+                    &:hover {
+                        background-color: #059669;
+                    }
+        
+                    &:active {
+                        background-color: #047857;
+                    }
+                }
+            }
+
+            .tag {
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.5rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                width: 50px;
+                text-align: center;
+    
+                &.low {
+                    background-color: #bdf5b5;
+                    color: #1e293b;
+                }
+    
+                &.medium {
+                    background-color: #fde905;
+                    color: #92400e;
+                }
+    
+                &.high {
+                    background-color: #fee2e2;
+                    color: #991b1b;
+                }
+            }
+        }
+
         .task-info {
             flex-grow: 1;
 
@@ -31,32 +108,16 @@
             }
         }
 
-        .tag {
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            width: 40px;
-            text-align: center;
+        .task-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
 
-            &.low {
-                background-color: #bdf5b5;
-                color: #1e293b;
-            }
-
-            &.medium {
-                background-color: #fde905;
-                color: #92400e;
-            }
-
-            &.high {
-                background-color: #fee2e2;
-                color: #991b1b;
+            .icon {
+                cursor: pointer;
             }
         }
 
-        .icon {
-            cursor: pointer;
-        }
     }
+
 }

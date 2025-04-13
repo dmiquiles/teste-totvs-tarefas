@@ -3,7 +3,23 @@ import { TaskService } from '../../services/task.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { loadTasks, loadTasksSuccess, loadTasksFailure, createTask, createTaskFailure, createTaskSuccess, updateTask, updateTaskSuccess, updateTaskFailure, deleteTask, deleteTaskFailure, deleteTaskSuccess } from '../actions/task.action';
+import { 
+  loadTasks, 
+  loadTasksSuccess, 
+  loadTasksFailure, 
+  createTask, 
+  createTaskFailure, 
+  createTaskSuccess, 
+  updateTask, 
+  updateTaskSuccess, 
+  updateTaskFailure, 
+  deleteTask, 
+  deleteTaskFailure, 
+  deleteTaskSuccess,
+  toggleTaskComplete,
+  toggleTaskCompleteFailure,
+  toggleTaskCompleteSuccess,
+} from '../actions/task.action';
 
 @Injectable()
 export class TaskEffects {
@@ -81,4 +97,18 @@ export class TaskEffects {
       map(() => loadTasks())
     )
   );
+
+  toggleTaskComplete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(toggleTaskComplete),
+      mergeMap(({ task }) =>
+        this.taskService.update({ ...task, completed: !task.completed }).pipe(
+          map((updatedTask) => toggleTaskCompleteSuccess({ task: updatedTask })),
+          catchError((error) => of(toggleTaskCompleteFailure({ error })))
+        )
+      )
+    )
+  );
+
+
 }

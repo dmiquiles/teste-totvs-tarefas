@@ -1,23 +1,17 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { Component } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { createTask, updateTask } from '../../store/actions/task.action';
 import { closeModal } from '../../store/actions/modal.action';
-import { selectModalOpen, selectModalTask } from '../../store/selectors/modal.selectors';
+import { selectModalTask } from '../../store/selectors/modal.selectors';
 
 @Component({
   selector: 'app-task-form',
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [DatePipe],
   templateUrl: './task-form.component.html',

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { selectDarkMode } from '../../store/selectors/theme.selectors';
 import { toggleDarkMode } from '../../store/actions/theme.action';
 import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 import { closeModal, openModal } from '../../store/actions/modal.action';
 
 @Component({
@@ -19,7 +18,7 @@ export class TaskHeaderComponent {
 
   darkMode$: Observable<boolean>;
 
-  constructor(private store: Store, private dialog: MatDialog) {
+  constructor(private store: Store) {
     this.darkMode$ = this.store.select(selectDarkMode);
   }
 

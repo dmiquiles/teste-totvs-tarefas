@@ -1,8 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TaskListComponent } from "../../components/task-list/task-list.component";
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { TaskHeaderComponent } from "../../components/task-header/task-header.component";
 import { ContainerComponent } from '../../../../shared/components/container/container.component';
 import { TaskSearchComponent } from "../../components/task-search/task-search.component";
