@@ -1,5 +1,3 @@
 package com.totvs.taskManager.domain;
 
-class TaskTest {
-
-}
+class TaskTest {}
