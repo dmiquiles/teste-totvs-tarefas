@@ -1,4 +1,4 @@
-package com.totvs.taskManager.infra.dtos;
+package com.totvs.taskManager.infra.dtos.task;
 
 import com.totvs.taskManager.domain.Task;
 import org.mapstruct.Mapper;
