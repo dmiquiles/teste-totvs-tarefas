@@ -1,10 +1,10 @@
 package com.totvs.taskManager.application;
 
+import com.totvs.taskManager.application.task.TaskService;
 import com.totvs.taskManager.domain.Task;
 import com.totvs.taskManager.exceptions.TaskNotFoundException;
 import com.totvs.taskManager.infra.enums.Priority;
 import com.totvs.taskManager.ports.out.TaskRepositoryPort;
-import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

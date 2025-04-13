@@ -1,11 +1,11 @@
 package com.totvs.taskManager.infra.controllers;
 
-import com.totvs.taskManager.application.TaskUseCase;
+import com.totvs.taskManager.application.task.TaskUseCase;
 import com.totvs.taskManager.domain.Task;
-import com.totvs.taskManager.infra.dtos.TaskMapper;
-import com.totvs.taskManager.infra.dtos.TaskRequest;
-import com.totvs.taskManager.infra.dtos.TaskResponse;
-import com.totvs.taskManager.infra.dtos.UpdateTaskRequest;
+import com.totvs.taskManager.infra.dtos.task.TaskMapper;
+import com.totvs.taskManager.infra.dtos.task.TaskRequest;
+import com.totvs.taskManager.infra.dtos.task.TaskResponse;
+import com.totvs.taskManager.infra.dtos.task.UpdateTaskRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

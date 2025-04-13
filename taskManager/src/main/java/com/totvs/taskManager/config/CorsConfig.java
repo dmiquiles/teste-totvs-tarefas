@@ -1,4 +1,4 @@
-package com.totvs.taskManager.infra.config;
+package com.totvs.taskManager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

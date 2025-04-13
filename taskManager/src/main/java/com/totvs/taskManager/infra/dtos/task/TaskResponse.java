@@ -1,7 +1,6 @@
-package com.totvs.taskManager.infra.dtos;
+package com.totvs.taskManager.infra.dtos.task;
 
 import com.totvs.taskManager.infra.enums.Priority;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
