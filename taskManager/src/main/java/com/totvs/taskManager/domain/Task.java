@@ -25,10 +25,5 @@ public class Task {
     private LocalDateTime date;
     private LocalDateTime updateAt = null;
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    public void toggleComplete() {
-        this.completed = !this.completed;
-    }
-
 }
 
