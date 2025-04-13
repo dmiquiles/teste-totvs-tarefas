@@ -41,7 +41,7 @@ public class TaskController {
     @Operation(summary = "Lista todas as tasks com paginação")
     public ResponseEntity<Page<Task>> findAllTasks(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "1000") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Task> tasks = taskUseCase.findAll(pageable);

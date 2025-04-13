@@ -26,11 +26,5 @@ public class Task {
     private LocalDateTime updateAt = null;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public void markAsCompleted() {
-        if (!this.completed) {
-            this.completed = true;
-        }
-    }
-
 }
 
