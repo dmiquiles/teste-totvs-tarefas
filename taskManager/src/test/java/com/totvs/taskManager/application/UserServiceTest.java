@@ -41,14 +41,14 @@ public class UserServiceTest {
 
         when(userRepository.findByUsername("novoUsuario")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("senha123")).thenReturn("senhaCodificada");
-        when(userRepository.saveUser(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         User createdUser = userService.createUser(user);
 
         assertNotNull(createdUser);
         assertEquals("novoUsuario", createdUser.getUsername());
         assertEquals("senhaCodificada", createdUser.getPassword());
-        verify(userRepository, times(1)).saveUser(any(User.class));
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class UserServiceTest {
         });
 
         assertEquals("UsuáriousuarioExistentejá existe", exception.getMessage());
-        verify(userRepository, never()).saveUser(any(User.class));
+        verify(userRepository, never()).save(any(User.class));
     }
 
 }

@@ -26,7 +26,7 @@ public class UserService implements UserUseCase {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.saveUser(newUser);
+        return userRepository.save(newUser);
     }
 
     @Override
