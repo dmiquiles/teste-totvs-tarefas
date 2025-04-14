@@ -2,7 +2,7 @@ package com.totvs.taskManager.application;
 
 import com.totvs.taskManager.application.user.UserService;
 import com.totvs.taskManager.domain.User;
-import com.totvs.taskManager.infra.repositories.JpaUserRepository;
+import com.totvs.taskManager.ports.out.UserRepositoryPort;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.never;
 public class UserServiceTest {
 
     @Mock
-    private JpaUserRepository jpaUserRepository;
+    private UserRepositoryPort userRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -39,16 +39,16 @@ public class UserServiceTest {
         user.setUsername("novoUsuario");
         user.setPassword("senha123");
 
-        when(jpaUserRepository.findByUsername("novoUsuario")).thenReturn(Optional.empty());
+        when(userRepository.findByUsername("novoUsuario")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("senha123")).thenReturn("senhaCodificada");
-        when(jpaUserRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.saveUser(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         User createdUser = userService.createUser(user);
 
         assertNotNull(createdUser);
         assertEquals("novoUsuario", createdUser.getUsername());
         assertEquals("senhaCodificada", createdUser.getPassword());
-        verify(jpaUserRepository, times(1)).save(any(User.class));
+        verify(userRepository, times(1)).saveUser(any(User.class));
     }
 
     @Test
@@ -56,14 +56,14 @@ public class UserServiceTest {
         User user = new User();
         user.setUsername("usuarioExistente");
 
-        when(jpaUserRepository.findByUsername("usuarioExistente")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("usuarioExistente")).thenReturn(Optional.of(user));
 
         UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> {
             userService.createUser(user);
         });
 
         assertEquals("UsuáriousuarioExistentejá existe", exception.getMessage());
-        verify(jpaUserRepository, never()).save(any(User.class));
+        verify(userRepository, never()).saveUser(any(User.class));
     }
 
 }
