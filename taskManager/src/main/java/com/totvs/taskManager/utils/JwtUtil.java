@@ -14,21 +14,12 @@ public class JwtUtil {
 
     private final Key SIGNING_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-//    public String generateToken(String username) {
-//        return Jwts.builder()
-//                .setSubject(username)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
-//                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-//                .compact();
-//    }
-
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
-                .signWith(SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .compact();
     }
 

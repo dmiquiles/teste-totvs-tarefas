@@ -1,0 +1,17 @@
+<div *ngIf="showModal$ | async" class="modal-backdrop" (click)="close()"></div>
+<div *ngIf="showModal$ | async" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Erro</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <p>{{ errorMessage$ | async }}</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="confirm-btn" (click)="close()">Fechar</button>
+    </div>
+  </div>
+</div>

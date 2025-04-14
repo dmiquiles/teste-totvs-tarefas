@@ -1,0 +1,30 @@
+<div class="register-container">
+    <h2>Cadastro</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      
+        <label for="username">Usuário</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Digite seu usuário"
+        />
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+          <small *ngIf="registerForm.get('username')?.errors?.['required']">Usuário é obrigatório.</small>
+        </div>
+      
+        <label for="password">Senha</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Digite sua senha"
+        />
+        <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <small *ngIf="registerForm.get('password')?.errors?.['required']">Senha é obrigatória.</small>
+        </div>
+      
+      <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+    </form>
+    <a routerLink="/login">Já tem uma conta? Faça login</a>
+  </div>

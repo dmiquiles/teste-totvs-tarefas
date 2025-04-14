@@ -5,6 +5,7 @@ import { selectDarkMode } from '../../store/selectors/theme.selectors';
 import { toggleDarkMode } from '../../store/actions/theme.action';
 import { CommonModule } from '@angular/common';
 import { closeModal, openModal } from '../../store/actions/modal.action';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-task-header',
@@ -18,7 +19,10 @@ export class TaskHeaderComponent {
 
   darkMode$: Observable<boolean>;
 
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private authService: AuthService
+  ) {
     this.darkMode$ = this.store.select(selectDarkMode);
   }
 
@@ -32,6 +36,10 @@ export class TaskHeaderComponent {
 
   toggleDarkMode() {
     this.store.dispatch(toggleDarkMode());
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

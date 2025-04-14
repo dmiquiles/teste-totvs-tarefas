@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,13 +29,19 @@ public class AuthController {
     private final UserMapper mapper;
 
     @PostMapping(value = "/login", produces = "application/json")
-    public ResponseEntity<String> login(@Valid @RequestBody UserRequest userRequest) {
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody UserRequest userRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword())
         );
 
         String token = jwtUtil.generateToken(((User) authentication.getPrincipal()).getUsername());
-        return ResponseEntity.ok(token);
+        com.totvs.taskManager.domain.User user = userUseCase.findByUsername(userRequest.getUsername());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("userId", user.getId());
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(value = "/register", produces = "application/json")

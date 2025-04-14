@@ -26,54 +26,64 @@ public class TaskController {
     private final TaskUseCase taskUseCase;
     private final TaskMapper mapper;
 
-    @PostMapping
+    @PostMapping("/user/{userId}")
     @Operation(summary = "Cria uma task")
-    public  ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request) {
+    public  ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request, @PathVariable Long userId) {
         Task task = mapper.taskRequestToEntity(request);
 
         return ResponseEntity
                 .created(URI.create("/tasks/" + task.getId()))
-                .body(mapper.toResponse(taskUseCase.create(task)));
+                .body(mapper.toResponse(taskUseCase.create(task, userId)));
 
     }
 
-    @GetMapping
+    @GetMapping("/user/{userId}")
     @Operation(summary = "Lista todas as tasks com paginação")
-    public ResponseEntity<Page<Task>> findAllTasks(
+    public ResponseEntity<Page<TaskResponse>> findAllTasks(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1000") int size) {
+            @RequestParam(defaultValue = "1000") int size,
+            @PathVariable Long userId
+    ) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Task> tasks = taskUseCase.findAll(pageable);
-        return ResponseEntity.ok(tasks);
+
+        Page<TaskResponse> taskResponses = taskUseCase.findAll(userId, pageable)
+                .map(mapper::toResponse);
+        return ResponseEntity.ok(taskResponses);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/user/{userId}")
     @Operation(summary = "Deleta uma task por ID")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        taskUseCase.delete(id);
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id, @PathVariable Long userId) {
+        taskUseCase.delete(id, userId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/user/{userId}")
     @Operation(
             summary = "Buscar task por ID",
             description = "Retorna uma task com base no ID fornecido"
     )
-    public ResponseEntity<Task> findTaskById(@PathVariable Long id) {
-        Task task = taskUseCase.findById(id);
+    public ResponseEntity<Task> findTaskById(
+            @PathVariable Long id,
+            @PathVariable Long userId
+    ) {
+        Task task = taskUseCase.findById(id, userId);
         return ResponseEntity.ok(task);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/user/{userId}")
     @Operation(
             summary = "Editar task",
             description = "Edita as informações da task"
     )
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest request){
+    public ResponseEntity<TaskResponse> updateTask(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateTaskRequest request
+    ){
         Task updatedTask = mapper.updateTaskRequestToEntity(request);
         Task task = taskUseCase.update(id, updatedTask);
-        return ResponseEntity.ok(task);
+        return ResponseEntity.ok(mapper.toResponse(task));
     }
 
 }

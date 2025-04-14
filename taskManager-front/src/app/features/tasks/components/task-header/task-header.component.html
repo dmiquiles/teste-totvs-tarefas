@@ -5,5 +5,8 @@
         <span class="theme-toggle" (click)="toggleDarkMode()">
             <span class="material-icons">{{ (darkMode$ | async) ? 'dark_mode' : 'light_mode' }}</span>
         </span>
+        <span class="logout" (click)="logout()">
+            <span class="material-icons">power_settings_new</span>
+        </span>
     </div>
 </header>

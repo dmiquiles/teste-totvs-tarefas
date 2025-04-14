@@ -22,6 +22,10 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private LocalDateTime date;
     private LocalDateTime updateAt = null;
     private LocalDateTime createdAt = LocalDateTime.now();

@@ -20,12 +20,15 @@ import {
   toggleTaskCompleteFailure,
   toggleTaskCompleteSuccess,
 } from '../actions/task.action';
+import { Store } from '@ngrx/store';
+import { showErrorModal } from '../../../../core/error/error/store/actions/error.action';
 
 @Injectable()
 export class TaskEffects {
   constructor(
     private actions$: Actions,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private store: Store
   ) {}
 
   loadTasks$ = createEffect(() =>
@@ -42,7 +45,10 @@ export class TaskEffects {
 
         return result.pipe(
           map((pageable) => loadTasksSuccess({ tasks: pageable.content })),
-          catchError((error) => of(loadTasksFailure({ error })))
+          catchError((error) => {
+            this.store.dispatch(showErrorModal({ errorMessage: error.message }));
+            return of(loadTasksFailure({ error }));
+          })
         );
       })
     )

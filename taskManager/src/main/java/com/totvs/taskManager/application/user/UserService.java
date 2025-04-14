@@ -2,6 +2,7 @@ package com.totvs.taskManager.application.user;
 
 import com.totvs.taskManager.domain.User;
 import com.totvs.taskManager.infra.repositories.JpaUserRepository;
+import com.totvs.taskManager.ports.out.UserRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class UserService implements UserUseCase {
 
-    private final JpaUserRepository jpaUserRepository;
+//    private final JpaUserRepository jpaUserRepository;
+    private final UserRepositoryPort userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public User createUser(User user) {
 
-        if (jpaUserRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UsernameNotFoundException("Usuário"  + user.getUsername() + "já existe");
         }
 
@@ -25,6 +27,13 @@ public class UserService implements UserUseCase {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return jpaUserRepository.save(newUser);
+        return userRepository.save(newUser);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }
