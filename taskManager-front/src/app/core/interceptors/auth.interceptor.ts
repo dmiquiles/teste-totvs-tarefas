@@ -14,8 +14,14 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap((event) => {
         if (event instanceof HttpResponse && req.url.includes('/login')) {
-          const token = event.body;
+          const token = event.body?.token;
+          const userId = event.body?.userId;
+          if (userId) {
+            localStorage.removeItem('userId');
+            localStorage.setItem('userId', userId);
+          }
           if (token) {
+            localStorage.removeItem('token');
             localStorage.setItem('token', token);
           }
         }

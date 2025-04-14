@@ -14,22 +14,11 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  // login(username: string, password: string): boolean {
-  //   // Simulação de login (substitua por lógica real)
-  //   // if (username === 'admin' && password === 'admin') {
-  //   //   this.isAuthenticated = true;
-  //   //   localStorage.setItem('token', 'fake-jwt-token');
-  //   //   return true;
-  //   // }
-  //   // return false;
-  //   return this.httpClient.post(this.API_URL + '/login', { username, password });
-  // }
-
   login(username: string, password: string): Observable<boolean> {
-    return this.httpClient.post<string>(this.API_URL + '/login', { username, password }).pipe(
+    return this.httpClient.post<{token : string, userId: number}>(this.API_URL + '/login', { username, password })      
+    .pipe(
       map((response) => {
         if (response) {
-          // localStorage.setItem('token', response); // Armazena o token no localStorage
           this.isAuthenticated = true;
           return true;
         }
