@@ -4,9 +4,13 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 
 export const routes: Routes = [
-  
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'tasks',
     loadChildren: () => import('./features/tasks/task.routes').then((r) => r.TASK_ROUTES),
     canActivate: [AuthGuard],
   },

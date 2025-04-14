@@ -35,7 +35,7 @@ export class LoginComponent {
       this.authService.login(username, password).subscribe(
         (success) => {
           if (success) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/tasks']);
           } else {
             this.loginForm.setErrors({ invalidLogin: true });
           }
