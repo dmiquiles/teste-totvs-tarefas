@@ -32,7 +32,7 @@ public class AuthControllerTest {
     @Test
     void register_DeveCriarUsuarioERetornarResponse_QuandoDadosForemValidos() {
         UserRequest userRequest = new UserRequest("username", "password");
-        User user = new User(1L, "username", "password");
+        User user = new User(1L, "username", "password", null);
         UserResponse userResponse = new UserResponse(1L, "username");
 
         when(userMapper.userRequestToEntity(userRequest)).thenReturn(user);

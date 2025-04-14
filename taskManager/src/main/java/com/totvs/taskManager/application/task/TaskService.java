@@ -1,12 +1,15 @@
 package com.totvs.taskManager.application.task;
 
 import com.totvs.taskManager.domain.Task;
+import com.totvs.taskManager.domain.User;
 import com.totvs.taskManager.exceptions.TaskNotFoundException;
 import com.totvs.taskManager.ports.out.TaskRepositoryPort;
+import com.totvs.taskManager.ports.out.UserRepositoryPort;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,45 +17,61 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 public class TaskService implements TaskUseCase {
+
     private final TaskRepositoryPort repository;
+    private final UserRepositoryPort userRepository;
 
     @Override
-    public Task create(Task task) {
+    public Task create(Task task, Long userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        task.setUser(user);
+
         return repository.save(task);
     }
 
     @Override
-    public Page<Task> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Task> findAll(Long userId, Pageable pageable) {
+
+        validateId(userId);
+
+        return repository.findByUserId(userId, pageable);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, Long userId) {
 
-        validateTaskId(id);
+        validateId(id);
+
+        validateId(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
         if (!repository.existsById(id)) {
             throw new TaskNotFoundException(id);
         }
 
-        repository.deleteById(id);
+        repository.deleteById(id, userId);
     }
 
     @Override
-    public Task findById(Long id) {
+    public Task findById(Long id, Long userId) {
 
-        validateTaskId(id);
+        validateId(id);
 
-        return repository.findById(id)
+        return repository.findById(id, userId)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     @Override
     public Task update(Long id, Task updatedTask) {
 
-        validateTaskId(id);
+        validateId(id);
 
-        Task existingTask = repository.findById(id)
+        Task existingTask = repository.findById(id, 1L)
                 .orElseThrow(() -> new TaskNotFoundException(id));
 
         if (updatedTask == null) {
@@ -76,7 +95,7 @@ public class TaskService implements TaskUseCase {
         }
     }
 
-    private void validateTaskId(Long id) {
+    private void validateId(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("ID inválido: " + id);
         }
