@@ -113,6 +113,20 @@ class TaskControllerTest {
         List<Task> tasks = List.of(new Task(1L, "Tarefa 1", false, Priority.LOW, user, LocalDateTime.now(), LocalDateTime.now(), null));
         Page<Task> page = new PageImpl<>(tasks, pageable, 1);
 
+        List<TaskResponse> taskResponses = List.of(new TaskResponse(1L, "Tarefa 1", false, Priority.LOW, LocalDateTime.now(), null, LocalDateTime.now()));
+
+        when(mapper.toResponse(any(Task.class))).thenAnswer(invocation -> {
+            Task task = invocation.getArgument(0);
+            return new TaskResponse(
+                    task.getId(),
+                    task.getTitle(),
+                    task.isCompleted(),
+                    task.getPriority(),
+                    task.getCreatedAt(),
+                    task.getDate(),
+                    task.getUpdateAt()
+            );
+        });
         when(taskUseCase.findAll(1L, pageable)).thenReturn(page);
 
         ResponseEntity<Page<TaskResponse>> response = taskController.findAllTasks(0, 10, 1L);
@@ -199,14 +213,16 @@ class TaskControllerTest {
         UpdateTaskRequest request = new UpdateTaskRequest("Tarefa Atualizada", Priority.LOW, LocalDate.now(), true);
         User user = new User(1L, "username", "password", null);
         Task taskAtualizada = new Task(id, "Tarefa Atualizada", true, Priority.LOW, user, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+        TaskResponse taskResponse = new TaskResponse(id, "Tarefa Atualizada", true, Priority.LOW, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
 
         when(mapper.updateTaskRequestToEntity(request)).thenReturn(taskAtualizada);
         when(taskUseCase.update(id, taskAtualizada)).thenReturn(taskAtualizada);
+        when(mapper.toResponse(taskAtualizada)).thenReturn(taskResponse);
 
-        ResponseEntity<Task> resposta = taskController.updateTask(id, request);
+        ResponseEntity<TaskResponse> response = taskController.updateTask(id, request);
 
-        assertEquals(HttpStatus.OK, resposta.getStatusCode());
-        assertEquals(taskAtualizada, resposta.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(taskResponse, response.getBody());
         verify(taskUseCase, times(1)).update(id, taskAtualizada);
     }
 

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -54,7 +55,7 @@ class TaskServiceTest {
                 null,
                 LocalDateTime.now()
         );
-        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(repository.save(task)).thenReturn(task);
 
         Task result = taskService.create(task, 1L);
@@ -79,20 +80,22 @@ class TaskServiceTest {
                 null
         ));
         Page<Task> page = new PageImpl<>(tasks);
-        when(repository.findAll(pageable)).thenReturn(page);
+
+//        when(repository.findById(1L, 1L)).thenReturn(Optional.of(tasks.getFirst()));
+        when(repository.findByUserId(1L, pageable)).thenReturn(page);
 
         Page<Task> result = taskService.findAll(1L, pageable);
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        verify(repository, times(1)).findAll(pageable);
     }
 
     @Test
     void deletarTask_DeveLancarExcecao_QuandoIdNaoExistir() {
         Long id = 999L;
+        User user = new User(1L, "username", "password", null);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(repository.existsById(id)).thenReturn(false);
-
         assertThrows(TaskNotFoundException.class, () -> taskService.delete(id, 1L));
         verify(repository, times(1)).existsById(id);
     }
@@ -111,6 +114,7 @@ class TaskServiceTest {
                 LocalDateTime.now(),
                 null
         );
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(repository.findById(id, 1L)).thenReturn(Optional.of(task));
 
         Task result = taskService.findById(id, 1L);

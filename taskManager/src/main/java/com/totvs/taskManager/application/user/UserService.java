@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class UserService implements UserUseCase {
 
-//    private final JpaUserRepository jpaUserRepository;
     private final UserRepositoryPort userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -27,7 +26,7 @@ public class UserService implements UserUseCase {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(newUser);
+        return userRepository.saveUser(newUser);
     }
 
     @Override
