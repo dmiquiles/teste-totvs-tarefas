@@ -25,8 +25,17 @@ describe('TaskService', () => {
   } as PageableTaskResponse;
 
   beforeEach(() => {
+
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn(()=> '1'),
+      },
+      writable: true,
+    });
+
+
     TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule ],
+      imports: [HttpClientTestingModule ],
       providers: [TaskService],
     });
 
@@ -36,6 +45,13 @@ describe('TaskService', () => {
 
   afterEach(() => {
     httpMock.verify();
+    jest.restoreAllMocks();
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn(),
+      },
+      writable: true,
+    });
   });
 
   it('should be created', () => {
@@ -43,11 +59,12 @@ describe('TaskService', () => {
   });
 
   it('should fetch all tasks', () => {
+    window.localStorage.getItem = jest.fn(() => '1');
     service.getAll().subscribe((response) => {
       expect(response).toEqual(mockPageableResponse);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/tasks');
+    const req = httpMock.expectOne('http://localhost:8080/tasks/user/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockPageableResponse);
   });
@@ -67,7 +84,7 @@ describe('TaskService', () => {
       expect(task).toEqual(mockTask);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/tasks');
+    const req = httpMock.expectOne('http://localhost:8080/tasks/user/1');
     expect(req.request.method).toBe('POST');
     req.flush(mockTask);
   });
@@ -77,7 +94,7 @@ describe('TaskService', () => {
       expect(task).toEqual(mockTask);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/tasks/1');
+    const req = httpMock.expectOne('http://localhost:8080/tasks/1/user/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockTask);
   });
@@ -87,7 +104,7 @@ describe('TaskService', () => {
       expect(response).toBeNull();
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/tasks/1');
+    const req = httpMock.expectOne('http://localhost:8080/tasks/1/user/1');
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   });

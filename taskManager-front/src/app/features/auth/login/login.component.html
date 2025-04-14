@@ -28,5 +28,5 @@
 
       <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
     </form>
-    <a routerLink="/register">Não tem uma conta? Cadastre-se</a>
+    <span (click)="goToRegister()">Não tem uma conta? Cadastre-se</span>
   </div>

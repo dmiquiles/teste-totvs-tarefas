@@ -15,6 +15,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+
   registerForm: FormGroup;
 
   constructor(
@@ -37,5 +38,9 @@ export class RegisterComponent {
           this.router.navigate(['/login']);
         });
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

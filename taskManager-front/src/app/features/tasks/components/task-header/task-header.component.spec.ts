@@ -3,6 +3,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TaskHeaderComponent } from './task-header.component';
 import { toggleDarkMode } from '../../store/actions/theme.action';
 import { openModal, closeModal } from '../../store/actions/modal.action';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('TaskHeaderComponent', () => {
   let component: TaskHeaderComponent;
@@ -13,6 +14,7 @@ describe('TaskHeaderComponent', () => {
   beforeEach(async () => {
 
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       providers: [
         provideMockStore({ initialState }),
       ],

@@ -26,5 +26,5 @@
       
       <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
     </form>
-    <a routerLink="/login">Já tem uma conta? Faça login</a>
+    <span (click)="goToLogin()">Já tem uma conta? Faça login</span>
   </div>
