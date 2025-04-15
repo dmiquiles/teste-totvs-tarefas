@@ -41,5 +41,12 @@ public class JwtFilter extends OncePerRequestFilter  {
         chain.doFilter(request, response);
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        System.out.println("🔓 shouldNotFilter para: " + request.getServletPath());
+        String path = request.getServletPath();
+        return path.matches("^/(auth|swagger-ui|v3/api-docs|swagger-resources|webjars|swagger-ui\\.html).*");
+    }
+
 
 }
